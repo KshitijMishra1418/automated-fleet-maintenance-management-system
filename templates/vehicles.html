@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <div class="card-header">Vehicle Fleet</div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th><th>Type</th><th>Depot</th><th>Mileage</th><th>Last Service</th><th>Interval</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for v in vehicles %}
+              <tr>
+                <td>{{ v['id'] }}</td>
+                <td>{{ v['vtype'] }}</td>
+                <td>{{ v['depot'] }}</td>
+                <td>{{ v['mileage'] }}</td>
+                <td>{{ v['last_service'] }}</td>
+                <td>{{ v['interval'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}

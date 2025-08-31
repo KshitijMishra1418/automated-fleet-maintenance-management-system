@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="row g-3 mb-4">
+    <div class="col-md-3">
+      <div class="card"><div class="card-body">
+        <div class="text-muted">Total Tasks</div>
+        <div class="fs-2 fw-bold">{{ total_tasks }}</div>
+      </div></div>
+    </div>
+    <div class="col-md-3">
+      <div class="card"><div class="card-body">
+        <div class="text-muted">Pending</div>
+        <div class="fs-2 fw-bold">{{ pending_tasks }}</div>
+      </div></div>
+    </div>
+    <div class="col-md-3">
+      <div class="card"><div class="card-body">
+        <div class="text-muted">Completed</div>
+        <div class="fs-2 fw-bold">{{ completed_tasks }}</div>
+      </div></div>
+    </div>
+    <div class="col-md-3">
+      <div class="card"><div class="card-body">
+        <div class="text-muted">Overdue</div>
+        <div class="fs-2 fw-bold text-danger">{{ overdue }}</div>
+      </div></div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Technician Workload</div>
+        <div class="card-body">
+          <ul class="list-group">
+            {% for w in workload %}
+              <li class="list-group-item d-flex justify-content-between">
+                <span>{{ w['name'] }}</span>
+                <span class="badge bg-secondary">{{ w['active'] }} active</span>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">Completed Gallery (after photos)</div>
+        <div class="card-body">
+          {% if gallery %}
+            <div class="row g-2">
+              {% for g in gallery %}
+                <div class="col-6 col-md-3">
+                  <a href="{{ url_for('tasks') }}" class="text-decoration-none">
+                    <img class="img-fluid rounded" src="{{ url_for('uploaded_file', filename=g['filename']) }}" alt="after photo">
+                    <div class="small text-muted mt-1">{{ g['vehicle_id'] }} • #{{ g['task_id'] }}</div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+          {% else %}
+            <div class="text-muted">No completed tasks yet.</div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

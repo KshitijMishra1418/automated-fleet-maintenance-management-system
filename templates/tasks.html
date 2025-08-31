@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="card">
+    <div class="card-header">Tasks</div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-striped table-hover mb-0 align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>ID</th><th>Vehicle</th><th>Depot</th><th>Scheduled</th><th>Status</th><th>Technician</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for t in tasks %}
+              <tr>
+                <td>#{{ t['id'] }}</td>
+                <td>{{ t['vehicle_id'] }} ({{ t['vtype'] }})</td>
+                <td>{{ t['depot'] }}</td>
+                <td>{{ t['scheduled_date'] }}</td>
+                <td>
+                  <span class="badge {% if t['status']=='completed' %}bg-success{% elif t['status']=='pending' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                    {{ t['status'] }}
+                  </span>
+                </td>
+                <td>{{ t['tech_name'] or '—' }}</td>
+                <td>
+                  {% if t['status']!='completed' %}
+                    <a class="btn btn-sm btn-outline-primary" href="{{ url_for('complete_task', task_id=t['id']) }}">Complete</a>
+                  {% else %}
+                    <span class="text-muted small">done {{ t['completed_at'] or '' }}</span>
+                  {% endif %}
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
